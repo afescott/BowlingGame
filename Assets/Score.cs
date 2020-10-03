@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Management.Instrumentation;
+using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Score : MonoBehaviour
@@ -6,6 +9,8 @@ public class Score : MonoBehaviour
    public int scoreCount = 0;
 
    public static bool IsOver;
+
+
     
    void Update()
     {
@@ -13,9 +18,20 @@ public class Score : MonoBehaviour
 
         {
             ChangeText();
-            scoreCount = 0;
+          scoreCount = 0;
         }
     }
+
+   public  IEnumerator UserLoss()
+   {
+        //text
+        this.GetComponent<Text>().text = "Let's see your result";
+        yield return new WaitForSeconds(4);
+        if (scoreCount <= 0)
+        {
+           this.GetComponent<Text>().text = "Unfortunately you hit 0 pins, press B to restart";
+        }
+   }
 
     public void AddScore()
     {
@@ -31,8 +47,4 @@ public class Score : MonoBehaviour
         this.GetComponent<Text>().text = "Your score is: " + scoreCount + ", press B to restart";
     }
 
-    public void UserNoPinConnection()
-    {
-        this.GetComponent<Text>().text = "Unfortunately you hit 0 pins, press B to restart";
-    }
 }

@@ -9,8 +9,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
 
-    public static bool ISEnabled = true;
-    void Awake()
+  void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
@@ -18,8 +17,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     
     public void OnBeginDrag(PointerEventData eventData)
     {
-        ISEnabled = false;
-      
+   
         canvasGroup.alpha = .6f;
         canvasGroup.blocksRaycasts = false;
     }
@@ -31,8 +29,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        ISEnabled = true;
-
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
     }

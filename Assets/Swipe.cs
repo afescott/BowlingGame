@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary> Class exec <summary> 
+/// <summary> Class executed when user makes a swipe in the vicinity of the corresponding text <summary> 
 public class Swipe : MonoBehaviour
 {
     private Vector2 fingerDown;
@@ -10,25 +10,23 @@ public class Swipe : MonoBehaviour
     private Vector3 mouseDown = new Vector3();
     private Vector3 mouseStart = new Vector3();
 
-    void LateUpdate()
+
+    void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             mouseStart = Input.mousePosition;
         }
-        if (DragDrop.ISEnabled)
-        {
-            CheckPhoneSwipe();
+             CheckPhoneSwipe();
 
             CheckMouseSwipe();
-        }
-    }
+      }
 
     private void CheckMouseSwipe()
     {
         if (Input.GetMouseButtonUp(0))
         {
-            if (mouseStart.y > 700)
+            if (mouseStart.y > 530)
             {
                 mouseDown = Input.mousePosition;
                 checkSwipe(mouseStart, mouseDown);

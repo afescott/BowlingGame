@@ -7,45 +7,52 @@ public class BowlingBallRoll : MonoBehaviour
 {
     public EventHandler eventHandler;
 
-    private Rigidbody ballRigidBody;
-
     public Transform firePoint;
 
     public Score score;
 
     public float speed = 20f;
+
+    private Rigidbody ballRigidBody;
+
+    public Swipe swipe; 
+
+   private bool turnComplete;
+
     private float holdDownTime;
     private float holdDownStartTime = 0f;
-
-
-    
     void Start()
     {
         ballRigidBody = this.GetComponent<Rigidbody>();
         eventHandler += OnClickPress;
     }
 
-  
+      private void OnClickPress(object sender, EventArgs e)
+      {
+          if (turnComplete == false)
+          { 
+              ballRigidBody.AddForce(firePoint.forward * (holdDownTime * 300) *
+                                   (25)); // must be a way to use current ball
+            ballRigidBody.freezeRotation = true;
+            
+          score.DisplayScore();
 
-    private void OnClickPress(object sender, EventArgs e)
-    {
-        ballRigidBody.AddForce(firePoint.forward * (holdDownTime * 300) * (25)); // must be a way to use current ball
-        ballRigidBody.freezeRotation = true;
-
-        score.DisplayScore();
-        
-        DragDrop.ISEnabled = true;
-    }
+            
+            turnComplete = true;
+          }
+          swipe.gameObject.SetActive(true);
+       }
 
     /// <summary> Frame by frame to identify if the user wishes to reset, navigate and power bowling ball <summary> 
     void Update()
     {
        if (Input.GetKeyUp(KeyCode.B))
-        {
+       {
             ballRigidBody.position = firePoint.position;
             ballRigidBody.rotation = firePoint.rotation;
-            
-           }
+
+            turnComplete = false;
+       }
 
         if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
@@ -60,12 +67,14 @@ public class BowlingBallRoll : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             holdDownStartTime = Time.time;
-            DragDrop.ISEnabled = false;
+         
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-           PowerBall();
+            StartCoroutine(score.UserLoss());
+            PowerBall();
+           
         }
         
     }
@@ -73,8 +82,7 @@ public class BowlingBallRoll : MonoBehaviour
     /// <summary> method to power the bowling ball based on the user hold time <summary> 
     private void PowerBall()
     {       
-        DragDrop.ISEnabled = false;
-           
+      
             holdDownTime = Time.time - holdDownStartTime;
 
             if (holdDownTime > 0f && holdDownTime < 3f)

@@ -15,7 +15,7 @@ public class GameStart : MonoBehaviour
 
     void Start()
     {
-       StartCoroutine(ExampleCoroutine());
+       StartCoroutine(IntroMessageTimer());
         
         pins = GameObject.FindGameObjectsWithTag("Pin");
         pinPositions = new List<Vector3>();
@@ -58,12 +58,12 @@ public class GameStart : MonoBehaviour
         }
     }
 
-    IEnumerator ExampleCoroutine()
+    IEnumerator IntroMessageTimer()
     {
         if (IntroMessage != null)
         {
             IntroMessage.SetActive(true);
-            yield return new WaitForSeconds(4);
+            yield return new WaitForSeconds(7);
             if (IntroMessage != null)
             {
                 IntroMessage.SetActive(false);

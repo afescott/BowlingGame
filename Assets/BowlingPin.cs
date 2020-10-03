@@ -8,10 +8,13 @@ public class BowlingPin : MonoBehaviour
 
     public ParticleSystem particleExplosion;
 
+    private int pinCount = 0;
+
+    /// <summary> Enumerator to create the particle explosion <summary> 
     IEnumerator ExampleCoroutine()
     {
-        particleExplosion.Play();
-        yield return new WaitForSeconds(2);
+         particleExplosion.Play();
+        yield return new WaitForSeconds(1);
         particleExplosion.Stop();
         score.AddScore();
         this.gameObject.SetActive(false);
@@ -21,15 +24,18 @@ public class BowlingPin : MonoBehaviour
     {
         if (this.gameObject.transform.up.y < .6f)
         {
-           
-          
-            StartCoroutine(ExampleCoroutine());
-           
+            pinCount += 1;
 
-            //score.AddScore();
-            
         }
 
-    }
+        if (pinCount == 10)
+        {
+            StartCoroutine(ExampleCoroutine());
+        }
 
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            pinCount = 0;
+        }
+    }
 }

@@ -30,8 +30,6 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             this.GetComponent<Image>().sprite = eventData.pointerDrag.GetComponent<Image>().sprite;
 
             eventData.pointerDrag.transform.position = ObjectPositionsBowlingBallsLane[this.GetComponent<Image>().sprite];
-            
-            DragDrop.ISEnabled = false;
-        }
+   }
     }
 }
